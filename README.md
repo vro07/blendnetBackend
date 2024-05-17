@@ -18,3 +18,8 @@
 # DONE..
 
     python manage.py runserver
+
+
+## Frontend
+deployed: https://stock-watch-eta.vercel.app/
+github: https://github.com/QQ07/StockWatch
