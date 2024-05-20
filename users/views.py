@@ -13,25 +13,22 @@ from datetime import date,timedelta
 # I've Polygon's API for stock data.
 # todo: make API-key an environment variable
 def get_close_price(ticker):
-    API="vMn3iqIE7gSBJ0OXNr_dquQyT4ZH9zWQ"
+    # APIKEY="vMn3iqIE7gSBJ0OXNr_dquQyT4ZH9zWQ"
 
     # the API returns the closing price of the date passed, so we must do current date -2 to ensure the date passed is always past date, as for future dates API complains.
-    datee = (date.today() - timedelta(days=2)).strftime("%Y-%m-%d")
+    # datee = (date.today() - timedelta(days=2)).strftime("%Y-%m-%d")
     
-    url = f'https://api.polygon.io/v1/open-close/{ticker}/{datee}?adjusted=true&apiKey={API}'
-
+    # url = f'https://api.polygon.io/v1/open-close/{ticker}/{datee}?adjusted=true&apiKey={API}'
+    url = f'https://api.polygon.io/v2/aggs/ticker/{ticker}/prev?adjusted=true&apiKey=vMn3iqIE7gSBJ0OXNr_dquQyT4ZH9zWQ'
     try:
-        # Make a GET request to the API
         response = requests.get(url)
         response.raise_for_status()  
         
-        # Parse the JSON response
         data = response.json()
         
-        # Extract the close price from the response
-        close_price = data.get('close')
-
-        return close_price
+        results = data.get('results')
+        # print(results)
+        return results[0]['c']
     except requests.RequestException as e:
         print('Error:', e)
 
